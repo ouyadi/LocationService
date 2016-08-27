@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,5 +32,9 @@ public class EventController {
 		else{
 			return ResponseEntity.status(HttpStatus.CREATED).body(eventRepository.save(event));
 		}
+	}
+	@RequestMapping(method=RequestMethod.GET, value="/{eventId}")
+	public ResponseEntity<Event> get(@PathVariable String eventId){
+		return ResponseEntity.status(HttpStatus.OK).body(eventRepository.findOne(eventId));
 	}
 }
