@@ -33,6 +33,7 @@ public class EventController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(eventRepository.save(event));
 		}
 	}
+	
 	@RequestMapping(method=RequestMethod.GET, value="/{eventId}")
 	public ResponseEntity<Event> get(@PathVariable String eventId){
 		return ResponseEntity.status(HttpStatus.OK).body(eventRepository.findOne(eventId));
