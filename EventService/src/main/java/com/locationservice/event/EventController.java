@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,5 +38,16 @@ public class EventController {
 	@RequestMapping(method=RequestMethod.GET, value="/{eventId}")
 	public ResponseEntity<Event> get(@PathVariable String eventId){
 		return ResponseEntity.status(HttpStatus.OK).body(eventRepository.findOne(eventId));
+	}
+	
+	@RequestMapping(method=RequestMethod.DELETE ,value="/{eventId}" )
+	public ResponseEntity<?> delete(@PathVariable String eventId){
+		if(eventRepository.findOne(eventId)!=null){
+			eventRepository.delete(eventId);
+			return ResponseEntity.ok().build();
+		}
+		else{
+			return ResponseEntity.noContent().build();
+		}
 	}
 }
