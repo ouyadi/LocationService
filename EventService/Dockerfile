@@ -1,4 +1,5 @@
 FROM java:8
+MAINTAINER ouyadi
 VOLUME /tmp
 ADD build/libs/EventService.jar eventservice.jar
 EXPOSE 8080
