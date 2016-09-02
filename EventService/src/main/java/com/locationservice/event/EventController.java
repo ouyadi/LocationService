@@ -1,6 +1,11 @@
 package com.locationservice.event;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -35,12 +40,20 @@ public class EventController {
 		}
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value="/{eventId}")
-	public ResponseEntity<Event> get(@PathVariable String eventId){
-		return ResponseEntity.status(HttpStatus.OK).body(eventRepository.findOne(eventId));
+	@RequestMapping(method=RequestMethod.GET, value="/type={type}&value={value}")
+	public List<Event> get(@PathVariable String type, @PathVariable String value){
+		List<Event> list = new ArrayList<Event>();
+		if("id".equals(type)){
+			Event event = eventRepository.findOne(value);
+			list.add(event);
+			
+		}else if("eventType".equals(type)){
+			list = eventRepository.findByEventType(type);
+		}
+		return list;
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE ,value="/{eventId}" )
+	@RequestMapping(method=RequestMethod.DELETE, value="/id={eventId}" )
 	public ResponseEntity<?> delete(@PathVariable String eventId){
 		if(eventRepository.findOne(eventId)!=null){
 			eventRepository.delete(eventId);
@@ -50,4 +63,5 @@ public class EventController {
 			return ResponseEntity.noContent().build();
 		}
 	}
+	
 }
