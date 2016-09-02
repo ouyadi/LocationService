@@ -61,4 +61,9 @@ public class EventController {
 		}
 	}
 	
+	@RequestMapping(method=RequestMethod.GET, value="/listAll")
+	public List<Event> listAll(){
+		return eventRepository.findAll();
+	}
+	
 }
