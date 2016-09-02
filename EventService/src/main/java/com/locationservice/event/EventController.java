@@ -3,6 +3,8 @@ package com.locationservice.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventController {
 	@Autowired
 	EventRepository eventRepository;
+	Logger logger = LoggerFactory.getLogger(EventController.class);
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<?> create(@RequestBody Event event, BindingResult errors){
@@ -39,6 +42,7 @@ public class EventController {
 	
 	@RequestMapping(method=RequestMethod.GET, value="/type={type}&value={value}")
 	public List<Event> get(@PathVariable String type, @PathVariable String value){
+		logger.info("Request type:"+type+", Request value:"+value);
 		List<Event> list = new ArrayList<Event>();
 		if("id".equals(type)){
 			Event event = eventRepository.findOne(value);
