@@ -49,7 +49,7 @@ public class EventController {
 			list.add(event);
 			
 		}else if("eventType".equals(type)){
-			list = eventRepository.findByEventType(type);
+			list = eventRepository.findByEventType(value);
 		}
 		return list;
 	}
